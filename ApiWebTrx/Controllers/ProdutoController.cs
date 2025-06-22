@@ -20,5 +20,18 @@ namespace ApiWebTrx.Controllers
             var produtos = _context.Produtos.ToList();
             return Ok(produtos);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<ProdutoModel> BuscarProdutoPorId(int id)
+        {
+            var produto = _context.Produtos.Find(id);
+            if(produto == null)
+            {
+                return NotFound("Produto nao encontrado");
+            }
+
+            return Ok(produto);
+        }
     }
 }

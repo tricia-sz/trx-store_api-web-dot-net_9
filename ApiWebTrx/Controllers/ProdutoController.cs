@@ -48,5 +48,29 @@ namespace ApiWebTrx.Controllers
             return CreatedAtAction(nameof(BuscarProdutoPorId), new { id = produtoModel.Id }, produtoModel);
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult<ProdutoModel> EditarProduto(ProdutoModel produtoModel, int id)
+        {
+            var produto = _context.Produtos.Find(id);
+
+            if(produto == null)
+            {
+                return NotFound("Registro nao localizado!");
+            }
+
+            produto.Nome = produtoModel.Nome;
+            produto.Descricao = produtoModel.Descricao;
+            produto.Marca = produtoModel.Marca;
+            produto.QuantidadeEstoque = produtoModel.QuantidadeEstoque;
+            produto.CodigoDeBarras = produtoModel.CodigoDeBarras;
+
+            _context.Produtos.Update(produto);
+            _context.SaveChanges();
+
+            return NoContent();
+
+        }
+
     }
 }

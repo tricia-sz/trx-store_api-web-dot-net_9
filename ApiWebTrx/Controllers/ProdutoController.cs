@@ -72,5 +72,21 @@ namespace ApiWebTrx.Controllers
 
         }
 
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult<ProdutoModel> DeletarProduto(int id) {
+
+            var produto = _context.Produtos.Find(id);
+            if (produto == null)
+            {
+                return NotFound("REgistro nao lozalizado");
+            }
+
+            _context.Produtos.Remove(produto);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }

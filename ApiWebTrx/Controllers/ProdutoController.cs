@@ -33,5 +33,20 @@ namespace ApiWebTrx.Controllers
 
             return Ok(produto);
         }
+
+        [HttpPost]
+        public ActionResult<ProdutoModel> CriarProduto(ProdutoModel produtoModel)
+        {
+            if(produtoModel == null)
+            {
+                return BadRequest("Ocorreu um erro na Solicitacao!");
+            }
+
+            _context.Produtos.Add(produtoModel);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(BuscarProdutoPorId), new { id = produtoModel.Id }, produtoModel);
+        }
+
     }
 }
